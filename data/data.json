@@ -1,7 +1,7 @@
 {
   "metadata": {
     "project": "Project 3 - Drone-Based Delivery Optimization",
-    "version": "v3",
+    "version": "v3.1",
     "city": "Algiers",
     "country": "Algeria",
     "creation_date": "2026-05-20",
@@ -30,7 +30,7 @@
       "load_factor_wh_per_km_per_kg": 8,
       "empty_range_km": 56.8,
       "full_payload_range_km": 29.8,
-      "note": "Compute energy leg by leg \u2014 payload decreases at each drop."
+      "note": "Compute energy leg by leg — payload decreases at each drop."
     },
     "no_fly_zones": {
       "count": 10,
@@ -40,14 +40,15 @@
         "military": 6,
         "power_plant": 2
       },
-      "note": "Depot\u2192customer edges guaranteed clear. Customer-customer edges may be blocked."
+      "note": "Depot→customer edges guaranteed clear. Customer-customer edges may be blocked."
     },
     "changes_from_v2": [
-      "NFZ reduced from 45 \u2192 10 (largest/most meaningful zones, excluding depot-intersecting ones)",
+      "NFZ reduced from 45 → 10 (largest/most meaningful zones, excluding depot-intersecting ones)",
       "Original depot restored: Algiers Port (36.7833, 3.0583)",
-      "AABB check kept \u2014 simpler and consistent with reduced NFZ set",
-      "Customer generation uses rejection sampling: depot\u2192customer edge always clear",
-      "INST_04 drones: 4 \u2192 5 (capacity fix)"
+      "AABB check kept — simpler and consistent with reduced NFZ set",
+      "Customer generation uses rejection sampling: depot→customer edge always clear",
+      "INST_04 drones: 4 → 5 (capacity fix)",
+      "v3.1: city_template.drone_specs aligned with metadata.drone_spec (was stale v2 values: max_payload=2.5 kg, avg 80 wh/km — fleet[] and energy_matrices already used the metadata spec, so no instance data changed)"
     ]
   },
   "city_template": {
@@ -123,7 +124,7 @@
     "no_fly_zones": [
       {
         "osm_id": "81245358",
-        "name": "A\u00e9roport international d'Alger Houari Boum\u00e9diene \u0645\u0637\u0627\u0631 \u0627\u0644\u062c\u0632\u0627\u0626\u0631 \u0627\u0644\u062f\u0648\u0644\u064a \u0647\u0648\u0627\u0631\u064a \u0628\u0648\u0645\u062f\u064a\u0646",
+        "name": "Aéroport international d'Alger Houari Boumédiene مطار الجزائر الدولي هواري بومدين",
         "category": "aerodrome",
         "bounds": {
           "min_lat": 36.687027,
@@ -134,7 +135,7 @@
       },
       {
         "osm_id": "38224057",
-        "name": "\u0627\u0644\u0642\u0627\u0639\u062f\u0629 \u0627\u0644\u0639\u0633\u0643\u0631\u064a\u0629 \u0628\u0628\u0646\u064a \u0645\u0633\u0648\u0633",
+        "name": "القاعدة العسكرية ببني مسوس",
         "category": "military",
         "bounds": {
           "min_lat": 36.769428,
@@ -156,7 +157,7 @@
       },
       {
         "osm_id": "107755480",
-        "name": "Garde R\u00e9publicaine",
+        "name": "Garde Républicaine",
         "category": "military",
         "bounds": {
           "min_lat": 36.670547,
@@ -167,7 +168,7 @@
       },
       {
         "osm_id": "42454329",
-        "name": "Ecole Sup\u00e9rieure de Materiel",
+        "name": "Ecole Supérieure de Materiel",
         "category": "military",
         "bounds": {
           "min_lat": 36.706697,
@@ -178,7 +179,7 @@
       },
       {
         "osm_id": "96609872",
-        "name": "\u00c9cole sup\u00e9rieure navale",
+        "name": "École supérieure navale",
         "category": "military",
         "bounds": {
           "min_lat": 36.807063,
@@ -200,7 +201,7 @@
       },
       {
         "osm_id": "187426820",
-        "name": "\u0645\u0637\u0627\u0631 \u0627\u0644\u0634\u0631\u0627\u0642\u0629 \u0627\u0644\u0639\u0633\u0643\u0631\u064a",
+        "name": "مطار الشراقة العسكري",
         "category": "aerodrome",
         "bounds": {
           "min_lat": 36.773235,
@@ -211,7 +212,7 @@
       },
       {
         "osm_id": "107613896",
-        "name": "Centrale \u00e9lectrique d'El Hamma",
+        "name": "Centrale électrique d'El Hamma",
         "category": "power_plant",
         "bounds": {
           "min_lat": 36.748159,
@@ -222,7 +223,7 @@
       },
       {
         "osm_id": "107639938",
-        "name": "Centrale \u00e9lectrique de Bab Ezzouar",
+        "name": "Centrale électrique de Bab Ezzouar",
         "category": "power_plant",
         "bounds": {
           "min_lat": 36.728498,
@@ -233,10 +234,12 @@
       }
     ],
     "drone_specs": {
+      "model": "DeliveryDrone_X1",
       "battery_capacity_kwh": 2.5,
-      "max_payload_kg": 2.5,
+      "max_payload_kg": 5.0,
       "max_distance_km": 56,
-      "avg_energy_consumption_wh_per_km": 80,
+      "base_consumption_wh_per_km": 44,
+      "load_factor_wh_per_km_per_kg": 8,
       "cruise_speed_kmh": 50
     },
     "package_weights": [
@@ -1071,7 +1074,7 @@
         }
       },
       "nfz_blocked_edges": {
-        "note": "AABB intersection. Keys: 'i-j' (i<j). Depot\u2192customer edges guaranteed clear by construction.",
+        "note": "AABB intersection. Keys: 'i-j' (i<j). Depot→customer edges guaranteed clear by construction.",
         "edges": {}
       }
     },
@@ -2616,7 +2619,7 @@
         }
       },
       "nfz_blocked_edges": {
-        "note": "AABB intersection. Keys: 'i-j' (i<j). Depot\u2192customer edges guaranteed clear by construction.",
+        "note": "AABB intersection. Keys: 'i-j' (i<j). Depot→customer edges guaranteed clear by construction.",
         "edges": {}
       }
     },
@@ -4839,7 +4842,7 @@
         }
       },
       "nfz_blocked_edges": {
-        "note": "AABB intersection. Keys: 'i-j' (i<j). Depot\u2192customer edges guaranteed clear by construction.",
+        "note": "AABB intersection. Keys: 'i-j' (i<j). Depot→customer edges guaranteed clear by construction.",
         "edges": {}
       }
     },
@@ -8492,28 +8495,28 @@
         }
       },
       "nfz_blocked_edges": {
-        "note": "AABB intersection. Keys: 'i-j' (i<j). Depot\u2192customer edges guaranteed clear by construction.",
+        "note": "AABB intersection. Keys: 'i-j' (i<j). Depot→customer edges guaranteed clear by construction.",
         "edges": {
           "2-14": [
-            "Centrale \u00e9lectrique d'El Hamma"
+            "Centrale électrique d'El Hamma"
           ],
           "3-14": [
-            "Centrale \u00e9lectrique d'El Hamma"
+            "Centrale électrique d'El Hamma"
           ],
           "4-14": [
-            "Centrale \u00e9lectrique d'El Hamma"
+            "Centrale électrique d'El Hamma"
           ],
           "5-14": [
-            "Centrale \u00e9lectrique d'El Hamma"
+            "Centrale électrique d'El Hamma"
           ],
           "12-14": [
-            "Centrale \u00e9lectrique d'El Hamma"
+            "Centrale électrique d'El Hamma"
           ],
           "14-18": [
-            "Centrale \u00e9lectrique d'El Hamma"
+            "Centrale électrique d'El Hamma"
           ],
           "14-20": [
-            "Centrale \u00e9lectrique d'El Hamma"
+            "Centrale électrique d'El Hamma"
           ]
         }
       }
@@ -13927,7 +13930,7 @@
         }
       },
       "nfz_blocked_edges": {
-        "note": "AABB intersection. Keys: 'i-j' (i<j). Depot\u2192customer edges guaranteed clear by construction.",
+        "note": "AABB intersection. Keys: 'i-j' (i<j). Depot→customer edges guaranteed clear by construction.",
         "edges": {
           "9-17": [
             "Commandement des Forces Terrestres"
@@ -21473,45 +21476,45 @@
         }
       },
       "nfz_blocked_edges": {
-        "note": "AABB intersection. Keys: 'i-j' (i<j). Depot\u2192customer edges guaranteed clear by construction.",
+        "note": "AABB intersection. Keys: 'i-j' (i<j). Depot→customer edges guaranteed clear by construction.",
         "edges": {
           "1-21": [
-            "Centrale \u00e9lectrique d'El Hamma"
+            "Centrale électrique d'El Hamma"
           ],
           "2-21": [
             "Commandement des Forces Terrestres",
-            "Centrale \u00e9lectrique d'El Hamma"
+            "Centrale électrique d'El Hamma"
           ],
           "4-21": [
-            "Centrale \u00e9lectrique d'El Hamma"
+            "Centrale électrique d'El Hamma"
           ],
           "5-21": [
-            "Centrale \u00e9lectrique d'El Hamma"
+            "Centrale électrique d'El Hamma"
           ],
           "11-21": [
-            "Centrale \u00e9lectrique d'El Hamma"
+            "Centrale électrique d'El Hamma"
           ],
           "12-21": [
-            "Centrale \u00e9lectrique d'El Hamma"
+            "Centrale électrique d'El Hamma"
           ],
           "15-21": [
-            "Centrale \u00e9lectrique d'El Hamma"
+            "Centrale électrique d'El Hamma"
           ],
           "16-21": [
-            "Centrale \u00e9lectrique d'El Hamma"
+            "Centrale électrique d'El Hamma"
           ],
           "17-21": [
-            "Centrale \u00e9lectrique d'El Hamma"
+            "Centrale électrique d'El Hamma"
           ],
           "18-21": [
-            "Centrale \u00e9lectrique d'El Hamma"
+            "Centrale électrique d'El Hamma"
           ],
           "21-22": [
             "Commandement des Forces Terrestres",
-            "Centrale \u00e9lectrique d'El Hamma"
+            "Centrale électrique d'El Hamma"
           ],
           "21-30": [
-            "Centrale \u00e9lectrique d'El Hamma"
+            "Centrale électrique d'El Hamma"
           ]
         }
       }
@@ -34335,7 +34338,7 @@
         }
       },
       "nfz_blocked_edges": {
-        "note": "AABB intersection. Keys: 'i-j' (i<j). Depot\u2192customer edges guaranteed clear by construction.",
+        "note": "AABB intersection. Keys: 'i-j' (i<j). Depot→customer edges guaranteed clear by construction.",
         "edges": {
           "4-15": [
             "Commandement des Forces Terrestres"
@@ -53855,66 +53858,66 @@
         }
       },
       "nfz_blocked_edges": {
-        "note": "AABB intersection. Keys: 'i-j' (i<j). Depot\u2192customer edges guaranteed clear by construction.",
+        "note": "AABB intersection. Keys: 'i-j' (i<j). Depot→customer edges guaranteed clear by construction.",
         "edges": {
           "1-3": [
             "Commandement des Forces Terrestres",
-            "Centrale \u00e9lectrique d'El Hamma"
+            "Centrale électrique d'El Hamma"
           ],
           "1-4": [
-            "Centrale \u00e9lectrique d'El Hamma"
+            "Centrale électrique d'El Hamma"
           ],
           "1-8": [
-            "Centrale \u00e9lectrique d'El Hamma"
+            "Centrale électrique d'El Hamma"
           ],
           "1-18": [
-            "Centrale \u00e9lectrique d'El Hamma"
+            "Centrale électrique d'El Hamma"
           ],
           "1-25": [
-            "Centrale \u00e9lectrique d'El Hamma"
+            "Centrale électrique d'El Hamma"
           ],
           "1-28": [
-            "Centrale \u00e9lectrique d'El Hamma"
+            "Centrale électrique d'El Hamma"
           ],
           "1-33": [
-            "Centrale \u00e9lectrique d'El Hamma"
+            "Centrale électrique d'El Hamma"
           ],
           "1-34": [
-            "Centrale \u00e9lectrique d'El Hamma"
+            "Centrale électrique d'El Hamma"
           ],
           "1-36": [
-            "Centrale \u00e9lectrique d'El Hamma"
+            "Centrale électrique d'El Hamma"
           ],
           "1-37": [
-            "Centrale \u00e9lectrique d'El Hamma"
+            "Centrale électrique d'El Hamma"
           ],
           "1-38": [
-            "Centrale \u00e9lectrique d'El Hamma"
+            "Centrale électrique d'El Hamma"
           ],
           "1-39": [
-            "Centrale \u00e9lectrique d'El Hamma"
+            "Centrale électrique d'El Hamma"
           ],
           "1-40": [
-            "Centrale \u00e9lectrique d'El Hamma"
+            "Centrale électrique d'El Hamma"
           ],
           "1-43": [
-            "Centrale \u00e9lectrique d'El Hamma"
+            "Centrale électrique d'El Hamma"
           ],
           "1-45": [
-            "\u0627\u0644\u0642\u0627\u0639\u062f\u0629 \u0627\u0644\u0639\u0633\u0643\u0631\u064a\u0629 \u0628\u0628\u0646\u064a \u0645\u0633\u0648\u0633"
+            "القاعدة العسكرية ببني مسوس"
           ],
           "1-49": [
-            "Centrale \u00e9lectrique d'El Hamma"
+            "Centrale électrique d'El Hamma"
           ],
           "1-50": [
-            "Centrale \u00e9lectrique d'El Hamma"
+            "Centrale électrique d'El Hamma"
           ],
           "3-11": [
             "Commandement des Forces Terrestres"
           ],
           "3-17": [
             "Commandement des Forces Terrestres",
-            "Centrale \u00e9lectrique d'El Hamma"
+            "Centrale électrique d'El Hamma"
           ],
           "3-18": [
             "Commandement des Forces Terrestres"
@@ -53935,169 +53938,169 @@
             "Commandement des Forces Terrestres"
           ],
           "3-45": [
-            "\u0627\u0644\u0642\u0627\u0639\u062f\u0629 \u0627\u0644\u0639\u0633\u0643\u0631\u064a\u0629 \u0628\u0628\u0646\u064a \u0645\u0633\u0648\u0633"
+            "القاعدة العسكرية ببني مسوس"
           ],
           "3-49": [
             "Commandement des Forces Terrestres"
           ],
           "4-17": [
-            "Centrale \u00e9lectrique d'El Hamma"
+            "Centrale électrique d'El Hamma"
           ],
           "4-45": [
-            "\u0627\u0644\u0642\u0627\u0639\u062f\u0629 \u0627\u0644\u0639\u0633\u0643\u0631\u064a\u0629 \u0628\u0628\u0646\u064a \u0645\u0633\u0648\u0633"
+            "القاعدة العسكرية ببني مسوس"
           ],
           "5-45": [
-            "\u0627\u0644\u0642\u0627\u0639\u062f\u0629 \u0627\u0644\u0639\u0633\u0643\u0631\u064a\u0629 \u0628\u0628\u0646\u064a \u0645\u0633\u0648\u0633"
+            "القاعدة العسكرية ببني مسوس"
           ],
           "6-45": [
-            "\u0627\u0644\u0642\u0627\u0639\u062f\u0629 \u0627\u0644\u0639\u0633\u0643\u0631\u064a\u0629 \u0628\u0628\u0646\u064a \u0645\u0633\u0648\u0633"
+            "القاعدة العسكرية ببني مسوس"
           ],
           "7-45": [
-            "\u0627\u0644\u0642\u0627\u0639\u062f\u0629 \u0627\u0644\u0639\u0633\u0643\u0631\u064a\u0629 \u0628\u0628\u0646\u064a \u0645\u0633\u0648\u0633"
+            "القاعدة العسكرية ببني مسوس"
           ],
           "8-17": [
-            "Centrale \u00e9lectrique d'El Hamma"
+            "Centrale électrique d'El Hamma"
           ],
           "8-45": [
-            "\u0627\u0644\u0642\u0627\u0639\u062f\u0629 \u0627\u0644\u0639\u0633\u0643\u0631\u064a\u0629 \u0628\u0628\u0646\u064a \u0645\u0633\u0648\u0633"
+            "القاعدة العسكرية ببني مسوس"
           ],
           "10-45": [
-            "\u0627\u0644\u0642\u0627\u0639\u062f\u0629 \u0627\u0644\u0639\u0633\u0643\u0631\u064a\u0629 \u0628\u0628\u0646\u064a \u0645\u0633\u0648\u0633"
+            "القاعدة العسكرية ببني مسوس"
           ],
           "12-45": [
-            "\u0627\u0644\u0642\u0627\u0639\u062f\u0629 \u0627\u0644\u0639\u0633\u0643\u0631\u064a\u0629 \u0628\u0628\u0646\u064a \u0645\u0633\u0648\u0633"
+            "القاعدة العسكرية ببني مسوس"
           ],
           "13-45": [
-            "\u0627\u0644\u0642\u0627\u0639\u062f\u0629 \u0627\u0644\u0639\u0633\u0643\u0631\u064a\u0629 \u0628\u0628\u0646\u064a \u0645\u0633\u0648\u0633"
+            "القاعدة العسكرية ببني مسوس"
           ],
           "14-45": [
-            "\u0627\u0644\u0642\u0627\u0639\u062f\u0629 \u0627\u0644\u0639\u0633\u0643\u0631\u064a\u0629 \u0628\u0628\u0646\u064a \u0645\u0633\u0648\u0633"
+            "القاعدة العسكرية ببني مسوس"
           ],
           "15-45": [
-            "\u0627\u0644\u0642\u0627\u0639\u062f\u0629 \u0627\u0644\u0639\u0633\u0643\u0631\u064a\u0629 \u0628\u0628\u0646\u064a \u0645\u0633\u0648\u0633"
+            "القاعدة العسكرية ببني مسوس"
           ],
           "16-45": [
-            "\u0627\u0644\u0642\u0627\u0639\u062f\u0629 \u0627\u0644\u0639\u0633\u0643\u0631\u064a\u0629 \u0628\u0628\u0646\u064a \u0645\u0633\u0648\u0633"
+            "القاعدة العسكرية ببني مسوس"
           ],
           "17-18": [
-            "Centrale \u00e9lectrique d'El Hamma"
+            "Centrale électrique d'El Hamma"
           ],
           "17-25": [
-            "Centrale \u00e9lectrique d'El Hamma"
+            "Centrale électrique d'El Hamma"
           ],
           "17-28": [
-            "Centrale \u00e9lectrique d'El Hamma"
+            "Centrale électrique d'El Hamma"
           ],
           "17-33": [
-            "Centrale \u00e9lectrique d'El Hamma"
+            "Centrale électrique d'El Hamma"
           ],
           "17-34": [
-            "Centrale \u00e9lectrique d'El Hamma"
+            "Centrale électrique d'El Hamma"
           ],
           "17-36": [
-            "Centrale \u00e9lectrique d'El Hamma"
+            "Centrale électrique d'El Hamma"
           ],
           "17-37": [
-            "Centrale \u00e9lectrique d'El Hamma"
+            "Centrale électrique d'El Hamma"
           ],
           "17-38": [
-            "Centrale \u00e9lectrique d'El Hamma"
+            "Centrale électrique d'El Hamma"
           ],
           "17-39": [
-            "Centrale \u00e9lectrique d'El Hamma"
+            "Centrale électrique d'El Hamma"
           ],
           "17-40": [
-            "Centrale \u00e9lectrique d'El Hamma"
+            "Centrale électrique d'El Hamma"
           ],
           "17-43": [
-            "Centrale \u00e9lectrique d'El Hamma"
+            "Centrale électrique d'El Hamma"
           ],
           "17-45": [
-            "\u0627\u0644\u0642\u0627\u0639\u062f\u0629 \u0627\u0644\u0639\u0633\u0643\u0631\u064a\u0629 \u0628\u0628\u0646\u064a \u0645\u0633\u0648\u0633"
+            "القاعدة العسكرية ببني مسوس"
           ],
           "17-49": [
-            "Centrale \u00e9lectrique d'El Hamma"
+            "Centrale électrique d'El Hamma"
           ],
           "17-50": [
-            "Centrale \u00e9lectrique d'El Hamma"
+            "Centrale électrique d'El Hamma"
           ],
           "18-45": [
-            "\u0627\u0644\u0642\u0627\u0639\u062f\u0629 \u0627\u0644\u0639\u0633\u0643\u0631\u064a\u0629 \u0628\u0628\u0646\u064a \u0645\u0633\u0648\u0633"
+            "القاعدة العسكرية ببني مسوس"
           ],
           "19-45": [
-            "\u0627\u0644\u0642\u0627\u0639\u062f\u0629 \u0627\u0644\u0639\u0633\u0643\u0631\u064a\u0629 \u0628\u0628\u0646\u064a \u0645\u0633\u0648\u0633"
+            "القاعدة العسكرية ببني مسوس"
           ],
           "20-45": [
-            "\u0627\u0644\u0642\u0627\u0639\u062f\u0629 \u0627\u0644\u0639\u0633\u0643\u0631\u064a\u0629 \u0628\u0628\u0646\u064a \u0645\u0633\u0648\u0633"
+            "القاعدة العسكرية ببني مسوس"
           ],
           "21-45": [
-            "\u0627\u0644\u0642\u0627\u0639\u062f\u0629 \u0627\u0644\u0639\u0633\u0643\u0631\u064a\u0629 \u0628\u0628\u0646\u064a \u0645\u0633\u0648\u0633"
+            "القاعدة العسكرية ببني مسوس"
           ],
           "23-45": [
-            "\u0627\u0644\u0642\u0627\u0639\u062f\u0629 \u0627\u0644\u0639\u0633\u0643\u0631\u064a\u0629 \u0628\u0628\u0646\u064a \u0645\u0633\u0648\u0633"
+            "القاعدة العسكرية ببني مسوس"
           ],
           "25-45": [
-            "\u0627\u0644\u0642\u0627\u0639\u062f\u0629 \u0627\u0644\u0639\u0633\u0643\u0631\u064a\u0629 \u0628\u0628\u0646\u064a \u0645\u0633\u0648\u0633"
+            "القاعدة العسكرية ببني مسوس"
           ],
           "27-45": [
-            "\u0627\u0644\u0642\u0627\u0639\u062f\u0629 \u0627\u0644\u0639\u0633\u0643\u0631\u064a\u0629 \u0628\u0628\u0646\u064a \u0645\u0633\u0648\u0633"
+            "القاعدة العسكرية ببني مسوس"
           ],
           "28-45": [
-            "\u0627\u0644\u0642\u0627\u0639\u062f\u0629 \u0627\u0644\u0639\u0633\u0643\u0631\u064a\u0629 \u0628\u0628\u0646\u064a \u0645\u0633\u0648\u0633"
+            "القاعدة العسكرية ببني مسوس"
           ],
           "30-45": [
-            "\u0627\u0644\u0642\u0627\u0639\u062f\u0629 \u0627\u0644\u0639\u0633\u0643\u0631\u064a\u0629 \u0628\u0628\u0646\u064a \u0645\u0633\u0648\u0633"
+            "القاعدة العسكرية ببني مسوس"
           ],
           "31-45": [
-            "\u0627\u0644\u0642\u0627\u0639\u062f\u0629 \u0627\u0644\u0639\u0633\u0643\u0631\u064a\u0629 \u0628\u0628\u0646\u064a \u0645\u0633\u0648\u0633"
+            "القاعدة العسكرية ببني مسوس"
           ],
           "32-45": [
-            "\u0627\u0644\u0642\u0627\u0639\u062f\u0629 \u0627\u0644\u0639\u0633\u0643\u0631\u064a\u0629 \u0628\u0628\u0646\u064a \u0645\u0633\u0648\u0633"
+            "القاعدة العسكرية ببني مسوس"
           ],
           "33-45": [
-            "\u0627\u0644\u0642\u0627\u0639\u062f\u0629 \u0627\u0644\u0639\u0633\u0643\u0631\u064a\u0629 \u0628\u0628\u0646\u064a \u0645\u0633\u0648\u0633"
+            "القاعدة العسكرية ببني مسوس"
           ],
           "34-45": [
-            "\u0627\u0644\u0642\u0627\u0639\u062f\u0629 \u0627\u0644\u0639\u0633\u0643\u0631\u064a\u0629 \u0628\u0628\u0646\u064a \u0645\u0633\u0648\u0633"
+            "القاعدة العسكرية ببني مسوس"
           ],
           "35-45": [
-            "\u0627\u0644\u0642\u0627\u0639\u062f\u0629 \u0627\u0644\u0639\u0633\u0643\u0631\u064a\u0629 \u0628\u0628\u0646\u064a \u0645\u0633\u0648\u0633"
+            "القاعدة العسكرية ببني مسوس"
           ],
           "36-45": [
-            "\u0627\u0644\u0642\u0627\u0639\u062f\u0629 \u0627\u0644\u0639\u0633\u0643\u0631\u064a\u0629 \u0628\u0628\u0646\u064a \u0645\u0633\u0648\u0633"
+            "القاعدة العسكرية ببني مسوس"
           ],
           "37-45": [
-            "\u0627\u0644\u0642\u0627\u0639\u062f\u0629 \u0627\u0644\u0639\u0633\u0643\u0631\u064a\u0629 \u0628\u0628\u0646\u064a \u0645\u0633\u0648\u0633"
+            "القاعدة العسكرية ببني مسوس"
           ],
           "38-45": [
-            "\u0627\u0644\u0642\u0627\u0639\u062f\u0629 \u0627\u0644\u0639\u0633\u0643\u0631\u064a\u0629 \u0628\u0628\u0646\u064a \u0645\u0633\u0648\u0633"
+            "القاعدة العسكرية ببني مسوس"
           ],
           "39-45": [
-            "\u0627\u0644\u0642\u0627\u0639\u062f\u0629 \u0627\u0644\u0639\u0633\u0643\u0631\u064a\u0629 \u0628\u0628\u0646\u064a \u0645\u0633\u0648\u0633"
+            "القاعدة العسكرية ببني مسوس"
           ],
           "40-45": [
-            "\u0627\u0644\u0642\u0627\u0639\u062f\u0629 \u0627\u0644\u0639\u0633\u0643\u0631\u064a\u0629 \u0628\u0628\u0646\u064a \u0645\u0633\u0648\u0633"
+            "القاعدة العسكرية ببني مسوس"
           ],
           "41-45": [
-            "\u0627\u0644\u0642\u0627\u0639\u062f\u0629 \u0627\u0644\u0639\u0633\u0643\u0631\u064a\u0629 \u0628\u0628\u0646\u064a \u0645\u0633\u0648\u0633"
+            "القاعدة العسكرية ببني مسوس"
           ],
           "43-45": [
-            "\u0627\u0644\u0642\u0627\u0639\u062f\u0629 \u0627\u0644\u0639\u0633\u0643\u0631\u064a\u0629 \u0628\u0628\u0646\u064a \u0645\u0633\u0648\u0633"
+            "القاعدة العسكرية ببني مسوس"
           ],
           "45-46": [
-            "\u0627\u0644\u0642\u0627\u0639\u062f\u0629 \u0627\u0644\u0639\u0633\u0643\u0631\u064a\u0629 \u0628\u0628\u0646\u064a \u0645\u0633\u0648\u0633"
+            "القاعدة العسكرية ببني مسوس"
           ],
           "45-47": [
-            "\u0627\u0644\u0642\u0627\u0639\u062f\u0629 \u0627\u0644\u0639\u0633\u0643\u0631\u064a\u0629 \u0628\u0628\u0646\u064a \u0645\u0633\u0648\u0633"
+            "القاعدة العسكرية ببني مسوس"
           ],
           "45-48": [
-            "\u0627\u0644\u0642\u0627\u0639\u062f\u0629 \u0627\u0644\u0639\u0633\u0643\u0631\u064a\u0629 \u0628\u0628\u0646\u064a \u0645\u0633\u0648\u0633"
+            "القاعدة العسكرية ببني مسوس"
           ],
           "45-49": [
-            "\u0627\u0644\u0642\u0627\u0639\u062f\u0629 \u0627\u0644\u0639\u0633\u0643\u0631\u064a\u0629 \u0628\u0628\u0646\u064a \u0645\u0633\u0648\u0633"
+            "القاعدة العسكرية ببني مسوس"
           ],
           "45-50": [
-            "\u0627\u0644\u0642\u0627\u0639\u062f\u0629 \u0627\u0644\u0639\u0633\u0643\u0631\u064a\u0629 \u0628\u0628\u0646\u064a \u0645\u0633\u0648\u0633"
+            "القاعدة العسكرية ببني مسوس"
           ]
         }
       }
@@ -81701,81 +81704,81 @@
         }
       },
       "nfz_blocked_edges": {
-        "note": "AABB intersection. Keys: 'i-j' (i<j). Depot\u2192customer edges guaranteed clear by construction.",
+        "note": "AABB intersection. Keys: 'i-j' (i<j). Depot→customer edges guaranteed clear by construction.",
         "edges": {
           "1-2": [
-            "Centrale \u00e9lectrique d'El Hamma"
+            "Centrale électrique d'El Hamma"
           ],
           "1-9": [
-            "Centrale \u00e9lectrique d'El Hamma"
+            "Centrale électrique d'El Hamma"
           ],
           "1-10": [
-            "Centrale \u00e9lectrique d'El Hamma"
+            "Centrale électrique d'El Hamma"
           ],
           "1-13": [
-            "Centrale \u00e9lectrique d'El Hamma"
+            "Centrale électrique d'El Hamma"
           ],
           "1-16": [
-            "Centrale \u00e9lectrique d'El Hamma"
+            "Centrale électrique d'El Hamma"
           ],
           "1-18": [
-            "Centrale \u00e9lectrique d'El Hamma"
+            "Centrale électrique d'El Hamma"
           ],
           "1-24": [
-            "Centrale \u00e9lectrique d'El Hamma"
+            "Centrale électrique d'El Hamma"
           ],
           "1-25": [
-            "Centrale \u00e9lectrique d'El Hamma"
+            "Centrale électrique d'El Hamma"
           ],
           "1-26": [
-            "Centrale \u00e9lectrique d'El Hamma"
+            "Centrale électrique d'El Hamma"
           ],
           "1-27": [
-            "Centrale \u00e9lectrique d'El Hamma"
+            "Centrale électrique d'El Hamma"
           ],
           "1-33": [
-            "Centrale \u00e9lectrique d'El Hamma"
+            "Centrale électrique d'El Hamma"
           ],
           "1-34": [
-            "Centrale \u00e9lectrique d'El Hamma"
+            "Centrale électrique d'El Hamma"
           ],
           "1-35": [
-            "Centrale \u00e9lectrique d'El Hamma"
+            "Centrale électrique d'El Hamma"
           ],
           "1-36": [
-            "Centrale \u00e9lectrique d'El Hamma"
+            "Centrale électrique d'El Hamma"
           ],
           "1-37": [
-            "Centrale \u00e9lectrique d'El Hamma"
+            "Centrale électrique d'El Hamma"
           ],
           "1-40": [
             "Commandement des Forces Terrestres",
-            "Centrale \u00e9lectrique d'El Hamma"
+            "Centrale électrique d'El Hamma"
           ],
           "1-45": [
-            "Centrale \u00e9lectrique d'El Hamma"
+            "Centrale électrique d'El Hamma"
           ],
           "1-46": [
-            "Centrale \u00e9lectrique d'El Hamma"
+            "Centrale électrique d'El Hamma"
           ],
           "1-47": [
-            "Centrale \u00e9lectrique d'El Hamma"
+            "Centrale électrique d'El Hamma"
           ],
           "1-50": [
-            "Centrale \u00e9lectrique d'El Hamma"
+            "Centrale électrique d'El Hamma"
           ],
           "1-51": [
-            "Centrale \u00e9lectrique d'El Hamma"
+            "Centrale électrique d'El Hamma"
           ],
           "1-54": [
             "Commandement des Forces Terrestres",
-            "Centrale \u00e9lectrique d'El Hamma"
+            "Centrale électrique d'El Hamma"
           ],
           "1-56": [
-            "Centrale \u00e9lectrique d'El Hamma"
+            "Centrale électrique d'El Hamma"
           ],
           "1-60": [
-            "Centrale \u00e9lectrique d'El Hamma"
+            "Centrale électrique d'El Hamma"
           ],
           "39-40": [
             "Commandement des Forces Terrestres"
@@ -124163,37 +124166,37 @@
         }
       },
       "nfz_blocked_edges": {
-        "note": "AABB intersection. Keys: 'i-j' (i<j). Depot\u2192customer edges guaranteed clear by construction.",
+        "note": "AABB intersection. Keys: 'i-j' (i<j). Depot→customer edges guaranteed clear by construction.",
         "edges": {
           "2-23": [
-            "\u0627\u0644\u0642\u0627\u0639\u062f\u0629 \u0627\u0644\u0639\u0633\u0643\u0631\u064a\u0629 \u0628\u0628\u0646\u064a \u0645\u0633\u0648\u0633"
+            "القاعدة العسكرية ببني مسوس"
           ],
           "4-23": [
-            "\u0627\u0644\u0642\u0627\u0639\u062f\u0629 \u0627\u0644\u0639\u0633\u0643\u0631\u064a\u0629 \u0628\u0628\u0646\u064a \u0645\u0633\u0648\u0633"
+            "القاعدة العسكرية ببني مسوس"
           ],
           "5-23": [
-            "\u0627\u0644\u0642\u0627\u0639\u062f\u0629 \u0627\u0644\u0639\u0633\u0643\u0631\u064a\u0629 \u0628\u0628\u0646\u064a \u0645\u0633\u0648\u0633"
+            "القاعدة العسكرية ببني مسوس"
           ],
           "6-23": [
-            "\u0627\u0644\u0642\u0627\u0639\u062f\u0629 \u0627\u0644\u0639\u0633\u0643\u0631\u064a\u0629 \u0628\u0628\u0646\u064a \u0645\u0633\u0648\u0633"
+            "القاعدة العسكرية ببني مسوس"
           ],
           "7-23": [
-            "\u0627\u0644\u0642\u0627\u0639\u062f\u0629 \u0627\u0644\u0639\u0633\u0643\u0631\u064a\u0629 \u0628\u0628\u0646\u064a \u0645\u0633\u0648\u0633"
+            "القاعدة العسكرية ببني مسوس"
           ],
           "8-23": [
-            "\u0627\u0644\u0642\u0627\u0639\u062f\u0629 \u0627\u0644\u0639\u0633\u0643\u0631\u064a\u0629 \u0628\u0628\u0646\u064a \u0645\u0633\u0648\u0633"
+            "القاعدة العسكرية ببني مسوس"
           ],
           "9-23": [
-            "\u0627\u0644\u0642\u0627\u0639\u062f\u0629 \u0627\u0644\u0639\u0633\u0643\u0631\u064a\u0629 \u0628\u0628\u0646\u064a \u0645\u0633\u0648\u0633"
+            "القاعدة العسكرية ببني مسوس"
           ],
           "10-23": [
-            "\u0627\u0644\u0642\u0627\u0639\u062f\u0629 \u0627\u0644\u0639\u0633\u0643\u0631\u064a\u0629 \u0628\u0628\u0646\u064a \u0645\u0633\u0648\u0633"
+            "القاعدة العسكرية ببني مسوس"
           ],
           "11-23": [
-            "\u0627\u0644\u0642\u0627\u0639\u062f\u0629 \u0627\u0644\u0639\u0633\u0643\u0631\u064a\u0629 \u0628\u0628\u0646\u064a \u0645\u0633\u0648\u0633"
+            "القاعدة العسكرية ببني مسوس"
           ],
           "12-23": [
-            "\u0627\u0644\u0642\u0627\u0639\u062f\u0629 \u0627\u0644\u0639\u0633\u0643\u0631\u064a\u0629 \u0628\u0628\u0646\u064a \u0645\u0633\u0648\u0633"
+            "القاعدة العسكرية ببني مسوس"
           ],
           "12-29": [
             "Commandement des Forces Terrestres"
@@ -124205,13 +124208,13 @@
             "Commandement des Forces Terrestres"
           ],
           "14-23": [
-            "\u0627\u0644\u0642\u0627\u0639\u062f\u0629 \u0627\u0644\u0639\u0633\u0643\u0631\u064a\u0629 \u0628\u0628\u0646\u064a \u0645\u0633\u0648\u0633"
+            "القاعدة العسكرية ببني مسوس"
           ],
           "15-23": [
-            "\u0627\u0644\u0642\u0627\u0639\u062f\u0629 \u0627\u0644\u0639\u0633\u0643\u0631\u064a\u0629 \u0628\u0628\u0646\u064a \u0645\u0633\u0648\u0633"
+            "القاعدة العسكرية ببني مسوس"
           ],
           "16-23": [
-            "\u0627\u0644\u0642\u0627\u0639\u062f\u0629 \u0627\u0644\u0639\u0633\u0643\u0631\u064a\u0629 \u0628\u0628\u0646\u064a \u0645\u0633\u0648\u0633"
+            "القاعدة العسكرية ببني مسوس"
           ],
           "16-29": [
             "Commandement des Forces Terrestres"
@@ -124223,145 +124226,145 @@
             "Commandement des Forces Terrestres"
           ],
           "17-23": [
-            "\u0627\u0644\u0642\u0627\u0639\u062f\u0629 \u0627\u0644\u0639\u0633\u0643\u0631\u064a\u0629 \u0628\u0628\u0646\u064a \u0645\u0633\u0648\u0633"
+            "القاعدة العسكرية ببني مسوس"
           ],
           "18-23": [
-            "\u0627\u0644\u0642\u0627\u0639\u062f\u0629 \u0627\u0644\u0639\u0633\u0643\u0631\u064a\u0629 \u0628\u0628\u0646\u064a \u0645\u0633\u0648\u0633"
+            "القاعدة العسكرية ببني مسوس"
           ],
           "19-23": [
-            "\u0627\u0644\u0642\u0627\u0639\u062f\u0629 \u0627\u0644\u0639\u0633\u0643\u0631\u064a\u0629 \u0628\u0628\u0646\u064a \u0645\u0633\u0648\u0633"
+            "القاعدة العسكرية ببني مسوس"
           ],
           "22-23": [
-            "\u0627\u0644\u0642\u0627\u0639\u062f\u0629 \u0627\u0644\u0639\u0633\u0643\u0631\u064a\u0629 \u0628\u0628\u0646\u064a \u0645\u0633\u0648\u0633"
+            "القاعدة العسكرية ببني مسوس"
           ],
           "23-24": [
-            "\u0627\u0644\u0642\u0627\u0639\u062f\u0629 \u0627\u0644\u0639\u0633\u0643\u0631\u064a\u0629 \u0628\u0628\u0646\u064a \u0645\u0633\u0648\u0633"
+            "القاعدة العسكرية ببني مسوس"
           ],
           "23-25": [
-            "\u0627\u0644\u0642\u0627\u0639\u062f\u0629 \u0627\u0644\u0639\u0633\u0643\u0631\u064a\u0629 \u0628\u0628\u0646\u064a \u0645\u0633\u0648\u0633"
+            "القاعدة العسكرية ببني مسوس"
           ],
           "23-26": [
-            "\u0627\u0644\u0642\u0627\u0639\u062f\u0629 \u0627\u0644\u0639\u0633\u0643\u0631\u064a\u0629 \u0628\u0628\u0646\u064a \u0645\u0633\u0648\u0633"
+            "القاعدة العسكرية ببني مسوس"
           ],
           "23-28": [
-            "\u0627\u0644\u0642\u0627\u0639\u062f\u0629 \u0627\u0644\u0639\u0633\u0643\u0631\u064a\u0629 \u0628\u0628\u0646\u064a \u0645\u0633\u0648\u0633"
+            "القاعدة العسكرية ببني مسوس"
           ],
           "23-29": [
-            "\u0627\u0644\u0642\u0627\u0639\u062f\u0629 \u0627\u0644\u0639\u0633\u0643\u0631\u064a\u0629 \u0628\u0628\u0646\u064a \u0645\u0633\u0648\u0633"
+            "القاعدة العسكرية ببني مسوس"
           ],
           "23-30": [
-            "\u0627\u0644\u0642\u0627\u0639\u062f\u0629 \u0627\u0644\u0639\u0633\u0643\u0631\u064a\u0629 \u0628\u0628\u0646\u064a \u0645\u0633\u0648\u0633"
+            "القاعدة العسكرية ببني مسوس"
           ],
           "23-31": [
-            "\u0627\u0644\u0642\u0627\u0639\u062f\u0629 \u0627\u0644\u0639\u0633\u0643\u0631\u064a\u0629 \u0628\u0628\u0646\u064a \u0645\u0633\u0648\u0633"
+            "القاعدة العسكرية ببني مسوس"
           ],
           "23-32": [
-            "\u0627\u0644\u0642\u0627\u0639\u062f\u0629 \u0627\u0644\u0639\u0633\u0643\u0631\u064a\u0629 \u0628\u0628\u0646\u064a \u0645\u0633\u0648\u0633"
+            "القاعدة العسكرية ببني مسوس"
           ],
           "23-33": [
-            "\u0627\u0644\u0642\u0627\u0639\u062f\u0629 \u0627\u0644\u0639\u0633\u0643\u0631\u064a\u0629 \u0628\u0628\u0646\u064a \u0645\u0633\u0648\u0633"
+            "القاعدة العسكرية ببني مسوس"
           ],
           "23-34": [
-            "\u0627\u0644\u0642\u0627\u0639\u062f\u0629 \u0627\u0644\u0639\u0633\u0643\u0631\u064a\u0629 \u0628\u0628\u0646\u064a \u0645\u0633\u0648\u0633"
+            "القاعدة العسكرية ببني مسوس"
           ],
           "23-35": [
-            "\u0627\u0644\u0642\u0627\u0639\u062f\u0629 \u0627\u0644\u0639\u0633\u0643\u0631\u064a\u0629 \u0628\u0628\u0646\u064a \u0645\u0633\u0648\u0633"
+            "القاعدة العسكرية ببني مسوس"
           ],
           "23-37": [
-            "\u0627\u0644\u0642\u0627\u0639\u062f\u0629 \u0627\u0644\u0639\u0633\u0643\u0631\u064a\u0629 \u0628\u0628\u0646\u064a \u0645\u0633\u0648\u0633"
+            "القاعدة العسكرية ببني مسوس"
           ],
           "23-38": [
-            "\u0627\u0644\u0642\u0627\u0639\u062f\u0629 \u0627\u0644\u0639\u0633\u0643\u0631\u064a\u0629 \u0628\u0628\u0646\u064a \u0645\u0633\u0648\u0633"
+            "القاعدة العسكرية ببني مسوس"
           ],
           "23-41": [
-            "\u0627\u0644\u0642\u0627\u0639\u062f\u0629 \u0627\u0644\u0639\u0633\u0643\u0631\u064a\u0629 \u0628\u0628\u0646\u064a \u0645\u0633\u0648\u0633"
+            "القاعدة العسكرية ببني مسوس"
           ],
           "23-42": [
-            "\u0627\u0644\u0642\u0627\u0639\u062f\u0629 \u0627\u0644\u0639\u0633\u0643\u0631\u064a\u0629 \u0628\u0628\u0646\u064a \u0645\u0633\u0648\u0633"
+            "القاعدة العسكرية ببني مسوس"
           ],
           "23-43": [
-            "\u0627\u0644\u0642\u0627\u0639\u062f\u0629 \u0627\u0644\u0639\u0633\u0643\u0631\u064a\u0629 \u0628\u0628\u0646\u064a \u0645\u0633\u0648\u0633"
+            "القاعدة العسكرية ببني مسوس"
           ],
           "23-45": [
-            "\u0627\u0644\u0642\u0627\u0639\u062f\u0629 \u0627\u0644\u0639\u0633\u0643\u0631\u064a\u0629 \u0628\u0628\u0646\u064a \u0645\u0633\u0648\u0633"
+            "القاعدة العسكرية ببني مسوس"
           ],
           "23-46": [
-            "\u0627\u0644\u0642\u0627\u0639\u062f\u0629 \u0627\u0644\u0639\u0633\u0643\u0631\u064a\u0629 \u0628\u0628\u0646\u064a \u0645\u0633\u0648\u0633"
+            "القاعدة العسكرية ببني مسوس"
           ],
           "23-47": [
-            "\u0627\u0644\u0642\u0627\u0639\u062f\u0629 \u0627\u0644\u0639\u0633\u0643\u0631\u064a\u0629 \u0628\u0628\u0646\u064a \u0645\u0633\u0648\u0633"
+            "القاعدة العسكرية ببني مسوس"
           ],
           "23-48": [
-            "\u0627\u0644\u0642\u0627\u0639\u062f\u0629 \u0627\u0644\u0639\u0633\u0643\u0631\u064a\u0629 \u0628\u0628\u0646\u064a \u0645\u0633\u0648\u0633"
+            "القاعدة العسكرية ببني مسوس"
           ],
           "23-49": [
-            "\u0627\u0644\u0642\u0627\u0639\u062f\u0629 \u0627\u0644\u0639\u0633\u0643\u0631\u064a\u0629 \u0628\u0628\u0646\u064a \u0645\u0633\u0648\u0633"
+            "القاعدة العسكرية ببني مسوس"
           ],
           "23-50": [
-            "\u0627\u0644\u0642\u0627\u0639\u062f\u0629 \u0627\u0644\u0639\u0633\u0643\u0631\u064a\u0629 \u0628\u0628\u0646\u064a \u0645\u0633\u0648\u0633"
+            "القاعدة العسكرية ببني مسوس"
           ],
           "23-51": [
-            "\u0627\u0644\u0642\u0627\u0639\u062f\u0629 \u0627\u0644\u0639\u0633\u0643\u0631\u064a\u0629 \u0628\u0628\u0646\u064a \u0645\u0633\u0648\u0633"
+            "القاعدة العسكرية ببني مسوس"
           ],
           "23-52": [
-            "\u0627\u0644\u0642\u0627\u0639\u062f\u0629 \u0627\u0644\u0639\u0633\u0643\u0631\u064a\u0629 \u0628\u0628\u0646\u064a \u0645\u0633\u0648\u0633"
+            "القاعدة العسكرية ببني مسوس"
           ],
           "23-53": [
-            "\u0627\u0644\u0642\u0627\u0639\u062f\u0629 \u0627\u0644\u0639\u0633\u0643\u0631\u064a\u0629 \u0628\u0628\u0646\u064a \u0645\u0633\u0648\u0633"
+            "القاعدة العسكرية ببني مسوس"
           ],
           "23-54": [
-            "\u0627\u0644\u0642\u0627\u0639\u062f\u0629 \u0627\u0644\u0639\u0633\u0643\u0631\u064a\u0629 \u0628\u0628\u0646\u064a \u0645\u0633\u0648\u0633"
+            "القاعدة العسكرية ببني مسوس"
           ],
           "23-55": [
-            "\u0627\u0644\u0642\u0627\u0639\u062f\u0629 \u0627\u0644\u0639\u0633\u0643\u0631\u064a\u0629 \u0628\u0628\u0646\u064a \u0645\u0633\u0648\u0633"
+            "القاعدة العسكرية ببني مسوس"
           ],
           "23-57": [
-            "\u0627\u0644\u0642\u0627\u0639\u062f\u0629 \u0627\u0644\u0639\u0633\u0643\u0631\u064a\u0629 \u0628\u0628\u0646\u064a \u0645\u0633\u0648\u0633"
+            "القاعدة العسكرية ببني مسوس"
           ],
           "23-58": [
-            "\u0627\u0644\u0642\u0627\u0639\u062f\u0629 \u0627\u0644\u0639\u0633\u0643\u0631\u064a\u0629 \u0628\u0628\u0646\u064a \u0645\u0633\u0648\u0633"
+            "القاعدة العسكرية ببني مسوس"
           ],
           "23-59": [
-            "\u0627\u0644\u0642\u0627\u0639\u062f\u0629 \u0627\u0644\u0639\u0633\u0643\u0631\u064a\u0629 \u0628\u0628\u0646\u064a \u0645\u0633\u0648\u0633"
+            "القاعدة العسكرية ببني مسوس"
           ],
           "23-62": [
-            "\u0627\u0644\u0642\u0627\u0639\u062f\u0629 \u0627\u0644\u0639\u0633\u0643\u0631\u064a\u0629 \u0628\u0628\u0646\u064a \u0645\u0633\u0648\u0633"
+            "القاعدة العسكرية ببني مسوس"
           ],
           "23-63": [
-            "\u0627\u0644\u0642\u0627\u0639\u062f\u0629 \u0627\u0644\u0639\u0633\u0643\u0631\u064a\u0629 \u0628\u0628\u0646\u064a \u0645\u0633\u0648\u0633"
+            "القاعدة العسكرية ببني مسوس"
           ],
           "23-64": [
-            "\u0627\u0644\u0642\u0627\u0639\u062f\u0629 \u0627\u0644\u0639\u0633\u0643\u0631\u064a\u0629 \u0628\u0628\u0646\u064a \u0645\u0633\u0648\u0633"
+            "القاعدة العسكرية ببني مسوس"
           ],
           "23-65": [
-            "\u0627\u0644\u0642\u0627\u0639\u062f\u0629 \u0627\u0644\u0639\u0633\u0643\u0631\u064a\u0629 \u0628\u0628\u0646\u064a \u0645\u0633\u0648\u0633"
+            "القاعدة العسكرية ببني مسوس"
           ],
           "23-66": [
-            "\u0627\u0644\u0642\u0627\u0639\u062f\u0629 \u0627\u0644\u0639\u0633\u0643\u0631\u064a\u0629 \u0628\u0628\u0646\u064a \u0645\u0633\u0648\u0633"
+            "القاعدة العسكرية ببني مسوس"
           ],
           "23-68": [
-            "\u0627\u0644\u0642\u0627\u0639\u062f\u0629 \u0627\u0644\u0639\u0633\u0643\u0631\u064a\u0629 \u0628\u0628\u0646\u064a \u0645\u0633\u0648\u0633"
+            "القاعدة العسكرية ببني مسوس"
           ],
           "23-69": [
-            "\u0627\u0644\u0642\u0627\u0639\u062f\u0629 \u0627\u0644\u0639\u0633\u0643\u0631\u064a\u0629 \u0628\u0628\u0646\u064a \u0645\u0633\u0648\u0633"
+            "القاعدة العسكرية ببني مسوس"
           ],
           "23-70": [
-            "\u0627\u0644\u0642\u0627\u0639\u062f\u0629 \u0627\u0644\u0639\u0633\u0643\u0631\u064a\u0629 \u0628\u0628\u0646\u064a \u0645\u0633\u0648\u0633"
+            "القاعدة العسكرية ببني مسوس"
           ],
           "23-71": [
-            "\u0627\u0644\u0642\u0627\u0639\u062f\u0629 \u0627\u0644\u0639\u0633\u0643\u0631\u064a\u0629 \u0628\u0628\u0646\u064a \u0645\u0633\u0648\u0633"
+            "القاعدة العسكرية ببني مسوس"
           ],
           "23-72": [
-            "\u0627\u0644\u0642\u0627\u0639\u062f\u0629 \u0627\u0644\u0639\u0633\u0643\u0631\u064a\u0629 \u0628\u0628\u0646\u064a \u0645\u0633\u0648\u0633"
+            "القاعدة العسكرية ببني مسوس"
           ],
           "23-73": [
-            "\u0627\u0644\u0642\u0627\u0639\u062f\u0629 \u0627\u0644\u0639\u0633\u0643\u0631\u064a\u0629 \u0628\u0628\u0646\u064a \u0645\u0633\u0648\u0633"
+            "القاعدة العسكرية ببني مسوس"
           ],
           "23-74": [
-            "\u0627\u0644\u0642\u0627\u0639\u062f\u0629 \u0627\u0644\u0639\u0633\u0643\u0631\u064a\u0629 \u0628\u0628\u0646\u064a \u0645\u0633\u0648\u0633"
+            "القاعدة العسكرية ببني مسوس"
           ],
           "23-75": [
-            "\u0627\u0644\u0642\u0627\u0639\u062f\u0629 \u0627\u0644\u0639\u0633\u0643\u0631\u064a\u0629 \u0628\u0628\u0646\u064a \u0645\u0633\u0648\u0633"
+            "القاعدة العسكرية ببني مسوس"
           ],
           "27-29": [
             "Commandement des Forces Terrestres"
