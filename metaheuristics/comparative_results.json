@@ -1,0 +1,33 @@
+{
+  "greedy": {
+    "fitness": 30011.483217219014,
+    "energy_kwh": 11.483217219013351,
+    "violations": 3,
+    "unserved": 0,
+    "served": 20,
+    "routes": 13,
+    "runtime_sec": 0.0031789999920874834
+  },
+  "genetic_best": {
+    "fitness": 30010.631158035718,
+    "energy_kwh": 10.631158035716485,
+    "violations": 3,
+    "unserved": 0,
+    "served": 20,
+    "routes": 13,
+    "runtime_sec": 6.257433000020683
+  },
+  "genetic_average": {
+    "fitness": 30010.631158035718,
+    "energy_kwh": 10.631158035716485,
+    "violations": 3,
+    "unserved": 0,
+    "runtime_sec": 5.5863215333083645
+  },
+  "improvement_vs_greedy": {
+    "fitness_pct": 0.0028391105402207958,
+    "energy_pct": 7.420038888457742,
+    "runtime_pct": -196736.52140910365
+  },
+  "genetic_trials": 3
+}

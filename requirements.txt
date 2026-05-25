@@ -1,0 +1,19 @@
+# Algiers Drone Delivery Optimization - Requirements
+
+# Python 3.8+
+
+# External dependencies:
+osmnx>=1.7.2              # OpenStreetMap data extraction
+geopandas>=0.11.0        # Geospatial data processing
+shapely>=2.0.0            # Geometric operations
+folium>=0.14.0            # Map visualization
+requests>=2.28.0         # HTTP requests for OSM API
+
+# Standard library modules used:
+# - json: Data serialization
+# - math: Haversine formula calculations
+# - random: Customer data generation
+# - datetime: Timestamp generation
+# - pathlib: File path handling
+# - sys: System utilities
+# - os: Operating system utilities
