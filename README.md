@@ -202,7 +202,7 @@ edges resolved ahead of time into an edge list. The fleet is homogeneous: `Deliv
 
 ## Author
 
-Abdelmalek Nedjar — ENSIA, Numerical Methods and Optimization coursework.
+Abdelmalek Nedjar — ENSIA, Numerical Methods and Optimization coursework, graded 18.57/20.
 
 ## License
 
