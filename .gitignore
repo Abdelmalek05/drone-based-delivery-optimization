@@ -20,3 +20,11 @@ Thumbs.db
 # which IS tracked on purpose so the notebook renders without a 4-hour recompute.
 scratch/
 *.log
+
+# Local agent guidance — intentionally not published
+CLAUDE.md
+
+# Test / build artefacts
+.pytest_cache/
+build/
+dist/

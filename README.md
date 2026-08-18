@@ -1,5 +1,9 @@
 # Drone-Based Delivery Optimization over Algiers
 
+[![tests](https://github.com/Abdelmalek05/Drone-Based-delivery-optimization/actions/workflows/tests.yml/badge.svg)](https://github.com/Abdelmalek05/Drone-Based-delivery-optimization/actions/workflows/tests.yml)
+[![python](https://img.shields.io/badge/python-3.10%2B-blue)](pyproject.toml)
+[![license](https://img.shields.io/badge/license-MIT-green)](LICENSE)
+
 **[▶ Interactive presentation](https://nmo-presentation.vercel.app/)** · [Notebook](notebook.ipynb) · [Results](#results)
 
 Energy-optimal routing for a fleet of delivery drones flying out of the Port of Algiers, under battery,
@@ -77,8 +81,10 @@ Best energy found (kWh, lower is better) across all 10 instances:
 - **SA dominates GA on the larger instances** (Wilcoxon signed-rank over the 10 paired instances:
   W = 0.0, p = 0.031, significant at 5%) — and it gets there several times faster: 46 s mean per run on
   INST_10 versus 152 s for the GA, and 3–13× faster depending on the instance.
-- Under an **equal wall-clock budget** the ranking holds (INST_08, 40 s each: SA 15.117 kWh vs GA 17.157),
-  so SA's advantage is not merely a per-iteration cost artefact.
+- Under an **equal wall-clock budget** the ranking holds (INST_08, 40 s each: SA 14.998 kWh vs GA 17.157),
+  so SA's advantage is not merely a per-iteration cost artefact. (Equal-time results depend on the
+  machine — a faster CPU fits more iterations into the same budget — so re-running shifts these two
+  numbers; the cached best-of-15 results above are hardware-independent.)
 
 | | |
 |---|---|
@@ -89,6 +95,25 @@ Best energy found (kWh, lower is better) across all 10 instances:
 
 The notebook also quantifies **how binding the no-fly zones actually are**, by re-running SA on each
 instance with the NFZ constraints disabled and comparing the optima.
+
+## Correctness
+
+The solvers are not trusted on the strength of plausible-looking output:
+
+- **Branch and bound is verified exact.** A test enumerates *every* assignment of customers to
+  drones and every visit order on a 5-customer instance and asserts B&B returns that exact optimum.
+- **The energy model is checked against hand computation**, leg by leg, including the empty
+  return leg — and against the requirement that visit order changes the cost.
+- **The published results are a golden file.** Greedy is deterministic, so the package must
+  reproduce the energy stored in `results/cached-results.json` on all 10 instances; B&B must
+  re-prove the INST_01 optimum. This is what guarantees refactoring never silently changed a number.
+- Capacity, battery, and no-fly-zone rejection, repair invariants, and seed reproducibility are
+  each covered.
+
+```bash
+$ pytest
+23 passed
+```
 
 ## Presentation
 
@@ -102,11 +127,40 @@ experimental findings:
 ```bash
 git clone https://github.com/Abdelmalek05/Drone-Based-delivery-optimization.git
 cd Drone-Based-delivery-optimization
-pip install -r requirements.txt
+pip install -e ".[dev,notebook]"
+```
+
+**The notebook** — the full study, with every formulation, figure, and statistical test:
+
+```bash
 jupyter lab notebook.ipynb      # then: Run All
 ```
 
-Run from the repository root — the notebook uses relative paths.
+**The command line** — solve a single instance without opening Jupyter:
+
+```bash
+dronevrp --list
+dronevrp --instance INST_05 --solver sa --seed 0
+dronevrp --instance INST_01 --solver bnb --time-limit 120
+```
+
+```
+INST_02  n=12  K=4  solver=sa
+  energy   : 5.4657 kWh
+  drones   : 4 of 4
+  runtime  : 1.24 s
+  feasible : True
+  drone 1: depot -> 11 -> 4 -> 12 -> depot
+  ...
+```
+
+**The tests:**
+
+```bash
+pytest
+```
+
+Run from the repository root — the notebook and the default data path are relative to it.
 
 **Two modes, controlled by one file:**
 
@@ -122,10 +176,18 @@ run live solvers and take a few minutes regardless of the cache.
 ## Repository layout
 
 ```
-notebook.ipynb              the whole project: model, 4 solvers, experiments, analysis
+dronevrp/                   the model and the solvers
+├── instance.py             Instance — distances, demands, drone parameters, blocked arcs
+├── solution.py             Route and Solution — energy, feasibility, checking
+├── repair.py               Repairer — turn any candidate back into a feasible solution
+├── operators.py            crossover, mutation, and neighbourhood moves
+├── solvers/                greedy, branch & bound, genetic algorithm, simulated annealing
+├── study.py                the experimental protocol and summary table
+└── cli.py                  command line entry point
+tests/                      unit, solver, and regression tests
+notebook.ipynb              the study: formulations, experiments, figures, analysis
 data/data_spread.json       10 benchmark instances + city template (depot, NFZs, neighbourhoods)
 results/cached-results.json stored experimental results (every run's energy + convergence history)
-docs/report-v1.md           earlier written report (documents a superseded implementation)
 docs/figures/               figures exported from the notebook
 ```
 
