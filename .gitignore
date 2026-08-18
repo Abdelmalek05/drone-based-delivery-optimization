@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+
+# Jupyter
+.ipynb_checkpoints/
+*.nbconvert.ipynb
+
+# OS / editors
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Local scratch — regenerated experiment output goes to results/cached-results.json,
+# which IS tracked on purpose so the notebook renders without a 4-hour recompute.
+scratch/
+*.log
